@@ -1,0 +1,20 @@
+format_version: 1
+pipelines:
+  simple-clone-pipeline:
+    group: default
+    label_template: "${COUNT}"
+    materials:
+      git:
+        url: "https://github.com/Mahule123/yaml-file.git"
+        branch: main
+    stages:
+      - clone:
+          jobs:
+            - clone-repo
+
+jobs:
+  clone-repo:
+    tasks:
+      - echo: "Cloning repository..."
+      - git: |
+          git clone https://github.com/Mahule123/yaml-file.git

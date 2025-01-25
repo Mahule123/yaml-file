@@ -5,11 +5,10 @@ metadata:
   labels:
     app: web-svc
 spec:
-  selectors:
-    matchLabels:
-      app: web-app
+  selector:  # Correct singular 'selector' field
+    app: web-app  # This label must match the label in the Deployment pods
   type: NodePort
   ports:
-  - port: 80
-    targetPort: 8080
+  - port: 8080
+    targetPort: 8080  # This should match the containerPort in the Deployment
     protocol: TCP

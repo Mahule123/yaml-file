@@ -2,20 +2,21 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: web
-  namespace: prod
   labels:
     app: web-app
 spec:
-  replicas: 3
-  selectors:
-    matchlabels:
+  replicas: 1
+  selector:
+    matchLabels:   # Ensure this matches the pod's label selector
       app: web-app
   template:
     metadata:
       labels:
-        app: web-app
+        app: web-app  # Label should match with the 'selector'
     spec:
-      conatainers:
+      containers:
       - name: web
-        image: nginx
-        containerPort: 8080
+        #image: nginx
+        image: jenkins/jenkins:lts  # Added `:lts` to use the Jenkins LTS image (optional)
+        ports:
+        - containerPort: 8080  # This should match the `targetPort` in the Service YAML

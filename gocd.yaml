@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: gocd-deployment
+  labels:
+    app: gocd
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: gocd
+  template:
+    metadata:
+      labels:
+        app: gocd
+    spec:
+      containers:
+      - name: gocd-server
+        image: gocd/gocd-server  # Use the latest GoCD image
+        ports:
+        - containerPort: 8153  # Default GoCD web interface port
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: gocd-service
+  labels:
+    app: gocd
+spec:
+  selector:
+    app: gocd  # This selector ensures the service targets the correct pods
+  ports:
+  - port: 8153
+    targetPort: 8153  # The GoCD server listens on port 8153
+    nodePort: 32500   # NodePort for external access
+    protocol: TCP
+  type: NodePort
